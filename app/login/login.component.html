@@ -1,0 +1,47 @@
+<div class="container">
+
+    <div class="header">
+      New User? <a href="">Register Here...</a>
+    </div>
+  
+    <img class="logo" src="assets/logo.jpg" alt="Logo">
+  
+    <div class="right-section">
+  
+      <!-- <div class="toggle-container">
+        <span>User Login</span>
+        <label class="switch">
+          <input type="checkbox" (change)="toggleLoginType()">
+          <span class="slider"></span>
+        </label>
+        <span>Instructor Login</span>
+      </div> -->
+  
+      <div class="login-card" *ngIf="isUserLogin" user>
+        <h2>Login</h2>
+        <form [formGroup]="userLoginForm" (ngSubmit)="login()">
+          <input type="email" formControlName="userEmail" placeholder="Email">
+            <input type="password" formControlName="userPassword" placeholder="Password">
+            <button type="submit">Login</button>
+        </form>          
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+      </div>
+  
+      <!-- Instructor Login Card
+      <div class="login-card" *ngIf="!isUserLogin" instructor>
+        <h2>Instructor Login</h2>
+        <form [formGroup]="instructorLoginForm" (ngSubmit)="instructorLogin()">
+            <input type="email" formControlName="instructorEmail" placeholder="instructorEmail">
+            <input type="password" formControlName="instructorPassword" placeholder="instructorPassword">
+            <button type="submit">Login</button>
+        </form>  
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div> 
+      </div> -->
+  
+    </div>
+  </div>
+  

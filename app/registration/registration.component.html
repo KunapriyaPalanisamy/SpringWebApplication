@@ -1,0 +1,158 @@
+<div class="container">
+    <div class="logo-container">
+        <img class="logo" src="assets/logo.jpg" alt="Logo">
+    </div>
+
+    <div class="already-registered">
+        Already Registered? <a (click)="navigateToLogin()">Login Here</a>
+    </div>
+    <div class="registration-card">
+        <div *ngIf="isUserRegistration" class="user-registration">
+            <!-- User Registration Form -->
+            <h2>User Registration</h2>
+            <form [formGroup]="registrationForm">
+                <input type="email" placeholder="Email" formControlName="email">
+                <div *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+                    Invalid email
+                </div>
+                <input type="password" placeholder="Password" formControlName="password">
+                <div *ngIf="registrationForm.get('password')?.hasError('pattern') && registrationForm.get('password')?.touched"
+                    class="error-message">
+                    Password must contain at least one numeric character, one special character, one uppercase letter,
+                    and be at least 8 characters long.
+                </div>
+
+                <input type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+                <div *ngIf="registrationForm.hasError('mismatch') && registrationForm.get('confirmPassword')?.touched">
+                    Passwords do not match
+                </div>
+                <input type="text" placeholder="First Name" formControlName="firstName">
+                
+                <input type="text" placeholder="Last Name" formControlName="lastName">
+                <div class="select-container">
+                    <label>Age:</label>
+                    <select formControlName="age">
+                        <option *ngFor="let age of ages" [ngValue]="age">{{ age }}</option>
+                    </select>
+                </div>
+                <div class="select-container">
+                    <label>Gender:</label>
+                    <select formControlName="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="select-container">
+                    <label>Frequency:</label>
+                    <select formControlName="frequency">
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="twice a week">Twice a Week</option>
+                        <option value="more than twice">More than twice</option>
+                    </select>
+                </div>
+                <div class="select-container">
+                    <label>Goals:</label>
+                    <select formControlName="goals">
+                        <option value="fitness">Fitness</option>
+                        <option value="reduce weight">Reduce weight</option>
+                        <option value="increase weight">Increase weight</option>
+                        <option value="improve concentration">Improve Concentration</option>
+                        <option value="stress relief">Stress Relief</option>
+                    </select>
+                </div>
+                <input type="text" placeholder="Medical Condition" formControlName="medicalCondition">
+                <div *ngIf="registrationSuccess" class="success-message">
+                    Registration is successful!
+                </div>
+                <div *ngIf="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                </div>
+
+                <div *ngIf="otpSent">
+                    <input type="text" placeholder="Enter OTP" formControlName="otp">
+                    <button (click)="verifyOtp()">Verify and Register</button>
+                </div>
+
+                <button type="button" (click)="generateOtp()"
+                    [disabled]="!registrationForm.valid || registrationForm.hasError('mismatch')">Generate OTP</button>
+            </form>
+
+        </div>
+
+        <div *ngIf="!isUserRegistration" class="instructor-registration">
+            <!-- Instructor Registration Form -->
+            <h2>Instructor Registration</h2>
+            <form [formGroup]="instructorRegistrationForm" >
+
+                <input type="email" placeholder="Email" formControlName="email">
+                <div
+                    *ngIf="instructorRegistrationForm.get('email')?.invalid && instructorRegistrationForm.get('email')?.touched">
+                    Invalid email
+                </div>
+                <input type="password" placeholder="Password" formControlName="password">
+                <div *ngIf="instructorRegistrationForm.get('password')?.hasError('pattern') && instructorRegistrationForm.get('password')?.touched"
+                    class="error-message">
+                    Password must contain at least one numeric character, one special character, one uppercase letter,
+                    and be at least 8 characters long.
+                </div>
+
+                <input type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+                <div
+                    *ngIf="instructorRegistrationForm.hasError('mismatch') && instructorRegistrationForm.get('confirmPassword')?.touched">
+                    Passwords do not match
+                </div>
+                <input type="text" placeholder="First Name" formControlName="firstName">
+                <input type="text" placeholder="Last Name" formControlName="lastName">
+                <div class="select-container">
+                    <label>Age:</label>
+                    <select formControlName="age">
+                        <option *ngFor="let age of ages" [ngValue]="age">{{ age }}</option>
+                    </select>
+                </div>
+                <div class="select-container">
+                    <label>Gender:</label>
+                    <select formControlName="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <input type="text" placeholder="Experience" formControlName="experience">
+                <div class="select-container">
+                    <label>Specialization:</label>
+                    <select formControlName="specialization">
+                        <option value="meditation">Meditation</option>
+                        <option value="physiology">Physiology</option>
+                        <option value="breathing techniques">Breathing Techniques</option>
+                        <option value="postures">Postures</option>
+                    </select>
+                </div>
+                <input type="text" placeholder="About" formControlName="about">
+                <div *ngIf="instructorRegistrationSuccess" class="success-message">
+                    Registration as instructor is successful!
+                </div>
+                <div *ngIf="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                </div>
+
+                <div *ngIf="instructorOtpSent">
+                    <input type="text" placeholder="Enter OTP" formControlName="otp">
+                    <button (click)="verifyInstructorOtp()">Verify and Register as Instructor</button>
+                </div>
+                <button type="button" (click)="generateInstructorOtp()"
+                    [disabled]="!instructorRegistrationForm.valid || instructorRegistrationForm.hasError('mismatch')">Generate
+                    OTP for Instructor</button>
+            </form>
+
+        </div>
+
+        <!-- Toggle Button -->
+        <div class="toggle-container">
+            <span>User Registration</span>
+            <div class="toggle-slider" (click)="toggleRegistration()"></div>
+            <span>Instructor Registration</span>
+        </div>
+    </div>
+</div>

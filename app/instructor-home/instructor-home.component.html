@@ -1,0 +1,155 @@
+<div class="header">
+    <div class="title">Instructor Home</div>
+    <div class="menu">
+        <button (click)="toggleDropdown()">
+            ☰
+        </button>
+        <div class="dropdown" *ngIf="showDropdown">
+            <button (click)="goToProfile()">Profile</button>
+            <button (click)="logout()">Logout</button>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="sidebar">
+        <button (click)="navigateTo('users')">View All Users</button>
+        <button (click)="navigateTo('courses')">Courses</button>
+        <button (click)="navigateTo('addCourses')">Add Courses</button>
+        <button (click)="navigateTo('appointments')">Appointments</button>
+    </div>
+
+    <!-- Main Content based on selected tab -->
+    <div class="main-content">
+        <div *ngIf="selectedTab === 'users'">
+            <div *ngFor="let user of users" class="user-card">
+                <img src="assets/User.png" alt="User Image">
+                <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+                <!-- ... Other user details you want to show ... -->
+                <button (click)="showUserDetails(user)">View Details</button>
+            </div>
+    
+            <div *ngIf="selectedUser" class="overlay-card">
+                <img src="assets/User.png" alt="User Image">
+                <h3>{{ selectedUser.firstName }} {{ selectedUser.lastName }}</h3>
+                <p>Email: {{ selectedUser.email }}</p>
+                <p>Age: {{ selectedUser.age }}</p>
+                <p>Gender: {{ selectedUser.gender }}</p>
+                <p>Frequency of yoga practice: {{ selectedUser.frequency }}</p>
+                <p>Goals: {{ selectedUser.goals }}</p>
+                <p>Medical Condition(if any): {{ selectedUser.medicalCondition }}</p>
+
+
+                <button (click)="closeUserDetails()">Close</button>
+            </div>
+        </div>
+        <div *ngIf="selectedTab === 'appointments'" class="appointments-section">
+            <h2>Appointments</h2>
+            
+            <div class="filter-dropdown">
+                <label for="appointmentFilter">Filter: </label>
+                    <select id="appointmentFilter" [(ngModel)]="appointmentFilter" (change)="onFilterChange()">
+                        <option value="ALL">ALL</option>
+                        <option value="ACTIVE">ACTIVE</option>
+                    </select>
+            </div>
+
+
+    <table class="appointments-table">
+        <thead>
+            <tr>
+                <th>S. No</th>
+                <th>User Email</th>
+                <th>User Name</th>
+                <th>Instructor Email</th>
+                <th>Instructor Name</th>
+                <th>Date and Time</th>
+                <th>User Notes</th>
+                <!-- <th>Instructor Notes</th> -->
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let appointment of appointments; let i = index">
+                <td>{{ i+1 }}</td>
+                <td>{{ appointment.userEmail }}</td>
+                <td>{{ appointment.userName }}</td>
+                <td>{{ appointment.instructorEmail }}</td>
+                <td>{{ appointment.instructorName }}</td>
+                <td>{{ appointment.timings }}</td>
+                <td>{{ appointment.userNotes }}</td>
+                <!-- <td>{{ appointment.instructorNotes }}</td> -->
+                <td [ngClass]="getStatusClass(appointment.status)">{{ appointment.status }}</td>
+                <td>
+                    <button class="cancel-appointment" *ngIf="shouldShowCancel(appointment.status)" (click)="cancelAppointment(appointment)">Cancel</button>
+                    <button class="confirm-appointment" *ngIf="shouldShowConfirm(appointment.status)" (click)="confirmAppointment(appointment)">Confirm</button>
+                    <button class="complete-appointment" *ngIf="shouldShowComplete(appointment.status)" (click)="completeAppointment(appointment)">Complete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+        </div>
+
+        <div *ngIf="currentTab === 'courses'">
+            <div class="course-card" *ngFor="let course of courses">
+                <h2>{{ course.courseName }}</h2>
+                <p>{{ course.description }}</p>
+                <p>Age Range: {{ course.minAge }} - {{ course.maxAge }}</p>
+                <p>Goals: {{ course.goals }}</p>
+                <p>Good For: {{ course.goodFor }}</p>
+                <p *ngIf="course.badFor">Bad For: {{ course.badFor }}</p>
+                <p><a href="{{ course.path }}" target="_blank">How to perform this? Click to Download</a></p>
+                <!-- <button><a href="{{ course.path }}" download>Download</a></button> -->
+                <button (click)="recommendCourse(course)">Recommend</button>
+                <!-- <button><a href="{{ course.path }}download"></a>Download Here</button> -->
+            </div>
+            <div class="right-sidebar" [class.show]="showUserSelection">
+                <div class="right-sidebar-content">
+                    <div *ngFor="let user of users">
+                        <h2>{{ user.name }}</h2>
+                        <p>{{ user.email }}</p>
+                        <button (click)="recommendToUser(user)">Recommend</button>
+                    </div>
+                    <button class="cancel" (click)="closeOverlay()">Cancel</button>
+                </div>
+            </div>
+            
+            
+            
+        </div>
+
+        <div *ngIf="currentTab === 'addCourses'">
+            <div class="add-course-container">
+                <div class="plus-sign" (click)="toggleCourseForm()">
+                    <!-- <span>+</span> -->
+                    <p>+ Click to add courses</p>
+                </div>
+                <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+                <div class="course-form" *ngIf="showCourseForm">
+                    Course Details<br>
+                    <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+                        <input type="file" (change)="onFileSelected($event)" />
+                        <input formControlName="courseName" placeholder="Course Name" />
+                        <textarea formControlName="description" placeholder="Description" maxlength="400"></textarea>
+                        <input formControlName="minAge" placeholder="Minimum Age" type="number" />
+                        <input formControlName="maxAge" placeholder="Maximum Age" type="number" />
+                        <select formControlName="goals">
+                            <option value="fitness">Fitness</option>
+                            <option value="improve concentration">Improve Concentration</option>
+                            <option value="stress relief">Stress Relief</option>
+                            <option value="increase weight">Increase Weight</option>
+                            <option value="reduce weight">Reduce Weight</option>
+                        </select>
+                        <input formControlName="goodFor" placeholder="Good For" />
+                        <input formControlName="badFor" placeholder="Bad For" />
+                        <button type="submit">Upload</button>
+                        <button type="button" (click)="toggleCourseForm()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+</div>

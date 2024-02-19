@@ -1,0 +1,27 @@
+<div class="profile-container">
+    <!-- Header section -->
+    <div class="header">
+        <span class="title">Instructor Profile</span>
+        <div class="menu">
+            <div class="dropdown">
+                <span class="menu-icon">☰</span>
+                <div class="dropdown-content">
+                    <a routerLink="/instructor-home">Home</a>
+                    <a (click)="logout()">Logout</a> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile card section -->
+    <div class="profile-card" *ngIf="intructorDetails"> 
+        <h2>Profile Details</h2>
+        <p>Email: {{ intructorDetails.email }}</p>
+        <p>Name: {{ intructorDetails.firstName }} {{ intructorDetails.lastName }}</p>
+        <p>Age: {{ intructorDetails.age }} years</p>
+        <p>Gender: {{ intructorDetails.gender }}</p>
+        <p>Experience: {{ intructorDetails.experience }} years</p>
+        <p>Specialization: {{ intructorDetails.specialization }}</p>
+        <p>About: {{ intructorDetails.about }}</p>
+    </div>
+</div>

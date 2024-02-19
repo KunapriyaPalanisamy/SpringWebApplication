@@ -1,0 +1,173 @@
+<div class="header">
+    <div class="title">User Home</div>
+    <div class="menu">
+        <button (click)="toggleDropdown()">
+            ☰
+        </button>
+        <div class="dropdown" *ngIf="showDropdown">
+            <button (click)="goToProfile()">Profile</button>
+            <button (click)="logout()">Logout</button>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="sidebar">
+        <button (click)="navigateTo('instructors')">Instructors</button>
+        <button (click)="navigateTo('courses')">Courses</button>
+        <button (click)="navigateTo('recommended')">Recommended Courses</button>
+        <button (click)="navigateTo('appointments')">Appointments</button>
+    </div>
+
+    <!-- Main Content based on selected tab -->
+    <div class="main-content">
+        <div class="card-wrapper">
+            <div *ngIf="currentTab === 'instructors'">
+                <div class="instructor-card" *ngFor="let instructor of instructors">
+                <img src="assets/Instructor.png" alt="Instructor Image">
+                <h3>{{ instructor.firstName }} {{ instructor.lastName }}</h3>
+                <!-- ... Other instructor details you want to show ... -->
+  
+                <button (click)="showInstructorDetails(instructor)">View Details</button>
+                <button (click)="showBookingAppointment(instructor)">Book Appointment</button>
+            </div>
+  
+            <div *ngIf="selectedInstructor" class="overlay-card">
+                <img src="assets/Instructor.png" alt="Instructor Image">
+                <h3>{{ selectedInstructor.firstName }} {{ selectedInstructor.lastName }}</h3>
+                <p>Email: {{ selectedInstructor.email }}</p>
+                <p>Age: {{ selectedInstructor.age }}</p>
+                <p>Gender: {{ selectedInstructor.gender }}</p>
+                <p>Experience: {{ selectedInstructor.experience }} years</p>
+                <p>Specialization: {{ selectedInstructor.specialization }}</p>
+                <p>About: {{ selectedInstructor.about }}</p>
+                <button (click)="closeInstructorDetails()">Close</button>
+            </div>
+            <div *ngIf="bookingAppointment" class="overlay-card">
+                <form #bookingForm="ngForm" (ngSubmit)="submitForReview()">
+                <h2>Book an Appointment</h2>
+                <p class="note">Note: The instructor will confirm your booking based on their availability.</p>
+                <label>Preferred Name:</label>
+                <input type="text" [(ngModel)]="appointmentName" required name="appointmentName">
+    
+                <label>Email:</label>
+                <input type="text" [value]="appointmentEmail" readonly>
+                
+                <label>Select Date:</label>
+                <input type="date" [min]="todaysDate" [max]="maxDate" [(ngModel)]="appointmentDate" (change)="validateDate()" required name="appointmentDate">
+    
+                <div *ngIf="dateError" class="error-message">
+                    {{ dateError }}
+                </div>
+    
+                
+                <label>Timings:</label>
+                    <select [(ngModel)]="appointmentTime" required name="appointmentTime">
+                        <option *ngFor="let time of availableTimes" [ngValue]="time">{{ time }}</option>
+                    </select>
+    
+                <label>Notes:</label>
+                    <input type="text" [(ngModel)]="appointmentNotes" required name="appointmentNotes">
+                <!-- <label>Notes:</label>
+                    <textarea [(ngModel)]="appointmentNotes"></textarea> -->
+                <div *ngIf="showMessage" class="success-message">
+                    {{ successMessage }}
+                  </div>
+                  <button type="submit" [disabled]="!bookingForm.valid">Submit for Review</button>
+                  <button (click)="cancelBooking()">Cancel</button>
+                </form>
+            </div>
+         </div>
+         </div>
+        
+
+
+<div *ngIf="currentTab === 'appointments'" class="appointments-section">
+
+<div class="filter-dropdown">
+    <label for="appointmentFilter">Filter: </label>
+    <select id="appointmentFilter" [(ngModel)]="appointmentFilter" (change)="onFilterChange()">
+        <option value="ALL">ALL</option>
+        <option value="ACTIVE">ACTIVE</option>
+    </select>
+</div>
+
+
+    <table class="appointments-table">
+        <thead>
+            <tr>
+                <th>S. No</th>
+                <th>User Email</th>
+                <th>User Name</th>
+                <th>Instructor Email</th>
+                <th>Instructor Name</th>
+                <th>Date and Time</th>
+                <th>User Notes</th>
+                <!-- <th>Instructor Notes</th> -->
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let appointment of appointments; let i = index">
+                <td>{{ i+1 }}</td>
+                <td>{{ appointment.userEmail }}</td>
+                <td>{{ appointment.userName }}</td>
+                <td>{{ appointment.instructorEmail }}</td>
+                <td>{{ appointment.instructorName }}</td>
+                <td>{{ appointment.timings }}</td>
+                <td>{{ appointment.userNotes }}</td>
+                <!-- <td>{{ appointment.instructorNotes }}</td> -->
+                <td [ngClass]="getStatusClass(appointment.status)">{{ appointment.status }}</td>
+                <td><button *ngIf="shouldShowCancel(appointment.status)" (click)="cancelAppointment(appointment)">Cancel</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div *ngIf="currentTab === 'courses'">
+    <div class="course-card" *ngFor="let course of courses">
+        <h2>{{ course.courseName }}</h2>
+        <p>{{ course.description }}</p>
+        <p>Age Range: {{ course.minAge }} - {{ course.maxAge }}</p>
+        <p>Goals: {{ course.goals }}</p>
+        <p>Good For: {{ course.goodFor }}</p>
+        <p *ngIf="course.badFor">Bad For: {{ course.badFor }}</p>
+        <p><a href="{{ course.path }}" target="_blank">How to perform this?</a></p>
+        <button><a href="{{ course.path }}" download>Download</a></button>
+    </div>
+</div>
+<div *ngIf="currentTab === 'recommended'">
+    <div class="course-card" *ngFor="let recommend of recommended">
+        <h2>{{ recommend.courseName }}</h2>
+        <p>{{ recommend.description }}</p>
+        <p>Age Range: {{ recommend.minAge }} - {{ recommend.maxAge }}</p>
+        <p>Goals: {{ recommend.goals }}</p>
+        <p>Good For: {{ recommend.goodFor }}</p>
+        <p *ngIf="recommend.badFor">Bad For: {{ recommend.badFor }}</p>
+        <p><a href="{{ recommend.path }}" target="_blank">How to perform this?</a></p>
+        <button><a href="{{ recommend.path }}" download>Download</a></button>
+    </div>
+    <br>
+    <!-- Instructor Recommended Courses -->
+    <div *ngIf="instructorRecommended.length > 0">
+        <h3>Instructor has recommended some courses for you:</h3>
+        
+        <div class="course-card" *ngFor="let recommend of instructorRecommended">
+            <h2>{{ recommend.courseName }}</h2>
+            <p>{{ recommend.description }}</p>
+            <p>Age Range: {{ recommend.minAge }} - {{ recommend.maxAge }}</p>
+            <p>Goals: {{ recommend.goals }}</p>
+            <p>Good For: {{ recommend.goodFor }}</p>
+            <p *ngIf="recommend.badFor">Bad For: {{ recommend.badFor }}</p>
+            <p><a href="{{ recommend.path }}" target="_blank">How to perform this?</a></p>
+            <button><a href="{{ recommend.path }}" download>Download</a></button>
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+</div>

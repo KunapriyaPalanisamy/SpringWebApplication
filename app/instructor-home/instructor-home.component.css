@@ -1,0 +1,549 @@
+.header {
+    background-color: rgb(241, 140, 207);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu {
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: white;
+    border: 1px solid rgb(180, 50, 167);
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown button {
+    padding: 10px;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+.dropdown button:hover {
+    background-color: rgb(233, 152, 255);
+    color: white;
+}
+
+.content {
+    display: flex;
+}
+body {
+    margin: 0;  
+    font-family: 'Roboto', sans-serif; 
+}
+
+.sidebar {
+    background-color: #ffc2fc;
+    border-right: 2px solid rgb(125, 14, 135);
+    width: 250px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px); 
+    position: fixed;
+    top: 60px; 
+    bottom: 0;
+    overflow-y: auto; 
+}
+
+.sidebar button {
+    padding: 20px; 
+    width: 100%;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid rgb(127, 14, 161);
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 18px; 
+    font-weight: 500;  
+    transition: background-color 0.2s ease;  
+}
+
+.sidebar button:hover {
+    background-color: #f46cf2;  
+}
+.sidebar button:last-child {
+    border-bottom: none;
+}
+
+.main-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 250px;
+    margin-top: 60px;
+    width: calc(100% - 250px); 
+    overflow-y: auto;
+}
+
+.card-wrapper {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    justify-content: center;
+}
+.user-card {
+    background-color: white;
+    border: 1px solid skyblue;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    width: 100%;
+    justify-content: space-between; 
+    display: flex;
+}
+
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.user-card:hover {
+    transform: translateY(-5px);
+}
+
+.user-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.user-card h3 {
+    margin: 10px 0 20px 0;
+    color: #333;
+}
+
+/* Buttons styling */
+.user-card button {
+    padding: 15px 20px;  /* Reduced padding for smaller buttons */
+    border: none;
+    background-color: rgb(220, 135, 235);
+    color: white;
+    border-radius: 5px;
+    margin-top: auto;  /* Push the buttons to the end */
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    margin-right: 10px;
+}
+.user-card button:last-child {
+    margin-left: 10px;
+}
+
+.user-card button:hover {
+    background-color: #fb2dba;
+}
+.user-actions {
+    display: flex; /* To lay out buttons horizontally */
+    justify-content: space-between; /* To space out the two buttons */
+    align-items: flex-end; /* To align the buttons to the bottom */
+    margin-top: auto; /* This ensures that this div takes up the remaining space */
+}
+
+.overlay-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 80%;
+    max-width: 500px;
+    background-color: white;
+    border: 1px solid skyblue;
+    padding: 25px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 80vh; 
+    overflow-y: auto;
+}
+
+.overlay-card button {
+    padding: 10px 15px;
+    border: none;
+    background-color: rgb(235, 135, 213);
+    color: white;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.overlay-card button:hover {
+    background-color: #ff4dbb;
+}
+
+.overlay-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.overlay-card img {
+    max-width: 40%;
+    height: auto;
+}
+
+.overlay-card label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.overlay-card input[type="text"], 
+.overlay-card input[type="date"], 
+.overlay-card select, 
+.overlay-card textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid skyblue;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.overlay-card input[type="text"]:focus,
+.overlay-card input[type="date"]:focus,
+.overlay-card textarea:focus,
+.overlay-card select:focus {
+    border-color: #4da6ff;
+}
+
+.overlay-card textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+.overlay-card label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+/* Appointments Section */
+.appointments-section {
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 5px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.filter-dropdown {
+    margin-bottom: 20px;
+}
+
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.appointments-table th, .appointments-table td {
+    border: 1px solid #e0e0e0;
+    padding: 12px 15px;
+    text-align: left;
+    transition: all 0.3s;
+}
+
+.appointments-table th {
+    background-color: #f7f7f7;
+}
+
+.appointments-table tr:hover {
+    background-color: #f0f0f0;
+}
+
+.appointments-table tr:nth-child(even) {
+    background-color: #fdfdfd;
+}
+
+/* Status colors */
+.confirmed {
+    background-color: #b8e994;
+    color: #2c662d;
+}
+
+.cancelled {
+    background-color: #ff6b6b;
+    color: #8a1c1a;
+}
+
+.pending {
+    background-color: #ffeaa7;
+    color: #8a650d;
+}
+
+.completed {
+    background-color: #a8e6cf;
+    color: #1f4d40;
+}
+.action-cell {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.appointments-table button {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff6b6b;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: inline-block;
+}
+
+.appointments-table button:hover {
+    background-color: #e63946;
+}
+.appointments-table button.confirm-appointment {
+    background-color: #b8e6cf; 
+    color: #1f4d40;
+}
+
+.appointments-table button.confirm-appointment:hover {
+    background-color: #08791d; 
+    color: #dff2ec;
+
+}
+
+.appointments-table button.cancel-appointment {
+    margin-right: 5px; 
+    margin-bottom: 5px;
+}
+
+.appointments-table button.complete-appointment {
+    background-color: #93ddf8; 
+    color: #030404;
+}
+
+.appointments-table button.complete-appointment:hover {
+    background-color: #0336ac; 
+    color: #dff2ec;
+
+}
+
+/* Courses menu from side bar */
+.course-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start; 
+    flex-direction: row;  
+    width: 100%;  
+    padding: 20px;  
+}
+
+
+.course-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 800px;
+    max-height: 40vh;
+    margin: 20px 10px;  
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    overflow-y: auto;
+}
+
+.course-card h2 {
+    color: #333;
+}
+
+.course-card p {
+    color: #666;
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button a {
+    color: white;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #9800b3;
+}
+
+/* add course  */
+.add-course-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.plus-sign {
+    font-size: 4em;
+    cursor: pointer;
+    text-align: center;
+}
+
+.plus-sign p {
+    font-size: 1.2em;
+}
+
+.course-form {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    background-color: #f9f9f9;
+}
+
+.course-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.course-form form input,
+.course-form form textarea,
+.course-form form select {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+.course-form form button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.course-form form button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.course-form form button[type="button"] {
+    background-color: #f44336;
+    color: white;
+}
+
+.success-message {
+    color: green;
+    font-size: 1.2em;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+/* Style for User Card */
+.right-sidebar {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    transition: right 0.3s;
+}
+
+.right-sidebar.show {
+    right: 0;
+}
+
+.right-sidebar-content {
+    padding: 20px;
+    position: relative;
+}
+
+
+.cancel {
+    display: block;
+    margin: 10px auto;
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style for Course Card */
+.course-card {
+    border: 2px solid #333;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+    background: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.course-card h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.course-card p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.course-card a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.course-card button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-right: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.course-card button:hover {
+    background-color: #0056b3;
+}

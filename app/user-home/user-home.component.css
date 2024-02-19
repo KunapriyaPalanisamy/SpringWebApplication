@@ -1,0 +1,404 @@
+.header {
+    background-color: skyblue;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu {
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: white;
+    border: 1px solid skyblue;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown button {
+    padding: 10px;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+.dropdown button:hover {
+    background-color: skyblue;
+    color: white;
+}
+
+.content {
+    display: flex;
+}
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif; 
+}
+
+
+.sidebar {
+    background-color: #e6f7ff;
+    border-right: 2px solid skyblue;
+    width: 250px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);  
+    position: fixed;
+    top: 60px; 
+    bottom: 0;
+    overflow-y: auto;
+}
+
+.sidebar button {
+    padding: 20px; 
+    width: 100%;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid skyblue;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 18px; 
+    font-weight: 500;  
+    transition: background-color 0.2s ease;  
+}
+
+.sidebar button:hover {
+    background-color: #96d7ff;  
+}
+.sidebar button:last-child {
+    border-bottom: none;
+}
+
+.main-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 250px; 
+    margin-top: 60px; 
+    width: calc(100% - 250px); 
+    overflow-y: auto;
+}
+
+.card-wrapper {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    justify-content: center;
+}
+.instructor-card {
+    background-color: white;
+    border: 1px solid skyblue;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    width: 100%;
+    justify-content: space-between; 
+    display: flex;
+}
+
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.instructor-card:hover {
+    transform: translateY(-5px);
+}
+
+.instructor-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.instructor-card h3 {
+    margin: 10px 0 20px 0;
+    color: #333;
+}
+
+.instructor-card button {
+    padding: 15px 20px;  
+    border: none;
+    background-color: skyblue;
+    color: white;
+    border-radius: 5px;
+    margin-top: auto; 
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    margin-right: 10px;
+}
+.instructor-card button:last-child {
+    margin-left: 10px;
+}
+
+.instructor-card button:hover {
+    background-color: #4da6ff;
+}
+.instructor-actions {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-end; 
+    margin-top: auto; 
+}
+
+.overlay-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 80%;
+    max-width: 500px;
+    background-color: white;
+    border: 1px solid skyblue;
+    padding: 25px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 80vh; 
+    overflow-y: auto;
+}
+
+.overlay-card button {
+    padding: 10px 15px;
+    border: none;
+    background-color: skyblue;
+    color: white;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.overlay-card button:hover {
+    background-color: #4da6ff;
+}
+
+.overlay-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.overlay-card img {
+    max-width: 40%;
+    height: auto;
+}
+
+.overlay-card label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.overlay-card input[type="text"], 
+.overlay-card input[type="date"], 
+.overlay-card select, 
+.overlay-card textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid skyblue;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.overlay-card input[type="text"]:focus,
+.overlay-card input[type="date"]:focus,
+.overlay-card textarea:focus,
+.overlay-card select:focus {
+    border-color: #4da6ff;
+}
+
+.overlay-card textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+.overlay-card label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.note {
+    font-style: italic;
+    margin-top: 20px;
+    color: grey;
+    text-align: center;
+}
+
+.success-message {
+    padding: 15px;
+    background-color: #DFF0D8;
+    border: 1px solid #D6E9C6;
+    color: #3C763D;
+    border-radius: 4px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+
+
+/* Appointments Section */
+.appointments-section {
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 5px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.filter-dropdown {
+    margin-bottom: 20px;
+}
+
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.appointments-table th, .appointments-table td {
+    border: 1px solid #e0e0e0;
+    padding: 12px 15px;
+    text-align: left;
+    transition: all 0.3s;
+}
+
+.appointments-table th {
+    background-color: #f7f7f7;
+}
+
+.appointments-table tr:hover {
+    background-color: #f0f0f0;
+}
+
+.appointments-table tr:nth-child(even) {
+    background-color: #fdfdfd;
+}
+
+/* Status colors */
+.confirmed {
+    background-color: #b8e994;
+    color: #2c662d;
+}
+
+.cancelled {
+    background-color: #ff6b6b;
+    color: #8a1c1a;
+}
+
+.pending {
+    background-color: #ffeaa7;
+    color: #8a650d;
+}
+
+.completed {
+    background-color: #a8e6cf;
+    color: #1f4d40;
+}
+.action-cell {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.appointments-table button {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff6b6b;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: inline-block;
+}
+
+.appointments-table button:hover {
+    background-color: #e63946;
+}
+
+/* Courses menu from side bar */
+.course-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start; 
+    flex-direction: row;  
+    width: 100%;  
+    padding: 20px;  
+}
+
+
+.course-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 800px;
+    max-height: 40vh;
+    margin: 20px 10px;  
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    overflow-y: auto;
+}
+
+.course-card h2 {
+    color: #333;
+}
+
+.course-card p {
+    color: #666;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+button a {
+    color: white;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

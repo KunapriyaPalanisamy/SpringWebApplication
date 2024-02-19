@@ -1,0 +1,168 @@
+.container {
+    position: relative;  
+    width: 80%;
+    height: 90vh;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff; 
+    justify-content: space-between; 
+    padding: 0 10%; 
+}
+.logo-container {
+    flex: 1.5; 
+    display: flex;
+    align-items: center; 
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+}
+
+.registration-card {
+    width: 250px;
+    margin-top: 1cm;
+    height: 600px;
+    background-color: rgba(251, 169, 232, 0.8);
+    overflow: auto;
+    flex: 2;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+
+}
+
+input, button {
+    width: 97%; 
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    margin: 8px 0;
+
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+}
+input[type="radio"], select {
+    width: auto;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+.toggle-slider {
+    position: relative;
+    width: 120px;
+    height: 60px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.toggle-slider:before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 50px;
+    height: 50px;
+    background-color: #3498db;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.container.clicked .toggle-slider:before {
+    left: 65px;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.toggle-container > span {
+    margin: 0 10px;
+}
+
+.select-container {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin: 10px 0;
+}
+
+.select-container > label {
+    margin-right: 10px;
+}
+
+.already-registered {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #fff;
+    z-index: 2;
+    background-color: rgba(0,0,0,0.6);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.already-registered a {
+    color: #3498db;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.success-message {
+    padding: 15px;
+    background-color: #2ecc71;  
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.instructor-card {
+    width: 600px;
+    padding: 20px;
+    background-color: rgba(240, 248, 255, 0.8); 
+    border-radius: 10px;
+    overflow: auto;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1); 
+}
+
+.instructor-card button {
+    background-color: #e74c3c; 
+    color: white;
+    cursor: pointer;
+}
+
+
+.instructor-card .expertise-input {
+    background-color: #f2f2f2; 
+    border: 1px solid #e74c3c; 
+}
+
+.instructor-card .course-input {
+    background-color: #f2f2f2; 
+    border: 1px solid #e74c3c;
+}
+
+.instructor-message {
+    padding: 15px;
+    background-color: #e74c3c;  
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+

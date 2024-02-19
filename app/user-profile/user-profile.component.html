@@ -1,0 +1,27 @@
+<div class="profile-container">
+    <!-- Header section -->
+    <div class="header">
+        <span class="title">User Profile</span>
+        <div class="menu">
+            <div class="dropdown">
+                <span class="menu-icon">☰</span>
+                <div class="dropdown-content">
+                    <a routerLink="/user-home">Home</a>
+                    <a (click)="logout()">Logout</a> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile card section -->
+    <div class="profile-card" *ngIf="userDetails"> 
+        <h2>Profile Details</h2>
+        <p>Email: {{ userDetails.email }}</p>
+        <p>Name: {{ userDetails.firstName }} {{ userDetails.lastName }}</p>
+        <p>Age: {{ userDetails.age }}</p>
+        <p>Frequency: {{ userDetails.frequency }}</p>
+        <p>Gender: {{ userDetails.gender }}</p>
+        <p>Goals: {{ userDetails.goals }}</p>
+        <p>Medical Condition: {{ userDetails.medicalCondition }}</p>
+    </div>
+</div>
